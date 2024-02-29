@@ -63,4 +63,84 @@ public class GestorTareas {
         }
         return tarea;
     }
+    
+    /**
+     * Metodo 'getListadoTareas' que devuelve un String con todas las tareas pendientes, 
+     * una en cada línea, precedidas de su posicion (empezando en 1), un punto y un espacio 
+     * (por ejemplo: "1. Hacer la cama"). Si no hay tareas devuelve la cadena vacía.
+     * No requiere parametros.
+     */
+    public String getListadoTareas() {
+        int posicion = 0;
+        String tareaNumerada = "";
+        for (String tarea : tareasPendientes) {
+            posicion++;
+            tareaNumerada = tareaNumerada + (posicion + ". " + tarea) + "\n";
+        }
+        return tareaNumerada;
+    }
+    
+    /**
+     * Metodo 'imprimirListadoTareas' que imprime por pantalla todas las tareas pendientes, 
+     * una en cada línea, precedidas de su posicion (empezando en 1), un punto y un espacio 
+     * (por ejemplo: "1. Hacer la cama"). Si no hay tareas imprime una línea en blanco. 
+     * El método no devuelve nada. No requiere parametros.
+     */
+    public void imprimirListadoTareas() {
+        int posicion = 0;
+        for (String tarea : tareasPendientes) {
+            posicion++;
+            System.out.println(posicion + ". " + tarea);
+        }
+    }
+    
+    /**
+     * Metodo 'getTareasEnUnaSolaLinea' que devuelve todas las tareas pendientes en una sola 
+     * linea separadas por comas, y por un espacio y con dos corchetes al inicio y al final
+     * del tipo "[tarea1, tarea2, tarea3]". Si no hay tareas devuelve la cadena "[]". 
+     */
+    public String getTareasEnUnaSolaLinea() {
+        int contador = 0;
+        String tareasUnaLinea = "[";
+        while (contador < tareasPendientes.size()) {
+            if (contador == (tareasPendientes.size() -1)) {
+                tareasUnaLinea = tareasUnaLinea + tareasPendientes.get(contador) + "]";
+            }
+            else {
+                tareasUnaLinea = tareasUnaLinea + tareasPendientes.get(contador) + ", ";
+            }
+            
+            contador++;
+        }
+
+        if (tareasPendientes.size() == 0) {
+            tareasUnaLinea = tareasUnaLinea + "]";
+        }
+        return tareasUnaLinea;
+    }
+    
+    /**
+     * Metodo 'imprimirTareasEnUnaSolaLinea' que imprime todas las tareas pendientes en una sola 
+     * linea separadas por comas, y por un espacio y con dos corcehete al inicio y al final
+     * del tipo "[tarea1, tarea2, tarea3]. Si no hay tareas imprime una línea con dos corchetes 
+     * del tipo "[]". No requiere parametros.
+     */
+    public void imprimirTareasEnUnaSolaLinea() {
+        System.out.println(getTareasEnUnaSolaLinea());
+    }
+    
+    /**
+     * Metodo 'existeTareaConElTexto' que devuelve true si hay al menos una tarea que contenga 
+     * el texto indicado como parametro, false en caso contrario. Hay que hacerlo con bucle for-each.
+     * Requiere de parametro de tipo String con el texto a buscar.
+     */
+    public boolean existeTareaConElTexto(String tareaBusca) {
+        boolean existe = false;
+        for (String tarea : tareasPendientes) {
+            if (tarea.contains(tareaBusca)) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
 }
