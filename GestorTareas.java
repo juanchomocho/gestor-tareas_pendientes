@@ -207,4 +207,109 @@ public class GestorTareas {
     public void imprimirTareasImpares() {
         System.out.println(getTareasImpares());
     }
+    
+    /**
+     * Metodo 'eliminarTarea'
+     * Elimina la tarea cuya numeración obtenida al listar las tareas coincide
+     * con el parametro indicado.
+     * Devuelve true si la tarea existe y se elimina y false en caso contrario
+     */
+    public boolean eliminarTarea(int numeracion) {
+        boolean eliminado = false;
+        if (numeracion <= tareasPendientes.size()) {
+            tareasPendientes.remove(numeracion-1);
+            eliminado = true;
+        }
+        return eliminado;
+    }
+    
+    /**
+     * Metodo 'getPrimeraTareaConElTexto'
+     * Devuelve un String conteniendo la primera tarea que contenga el texto
+     * indicado como parametro. En caso de que no haya ninguna coincidencia
+     * devuelve la cadena vacía. Hay que hacerlo con un bucle for-each.
+     */
+    public String getPrimeraTareaConElTexto(String textoBuscar) {
+        String tareaEncontrada = "";
+        boolean encontrado = false;
+        for (String tarea : tareasPendientes) {
+            if (tarea.contains(textoBuscar) && encontrado == false) {
+                tareaEncontrada = tarea;
+                encontrado = true;
+            }
+        }
+        return tareaEncontrada;
+    }
+    
+    /**
+     * Metodo 'getListadoTareasWhile'
+     * Devuelve un String con todas las tareas pendientes, una en cada línea, ç
+     * precedidas de su posicion (empezando en 1), un punto y un
+     * espacio (por ejemplo: "1. Hacer la cama"). Si no hay tareas devuelve la
+     * cadena vacía. Hay que hacerlo con un bucle while.
+     */
+    public String getListadoTareasWhile() {
+        int contador = 0;
+        String tareasUnaLinea = "";
+        while (contador < tareasPendientes.size()) {
+            tareasUnaLinea = tareasUnaLinea + (contador +1)  + ". "  + tareasPendientes.get(contador) + "\n" ;
+            contador++;
+        }
+
+        if (tareasPendientes.size() == 0) {
+            tareasUnaLinea = tareasUnaLinea + "";
+        }
+        return tareasUnaLinea;
+    }
+    
+    /**
+     * Metodo 'imprimirListadoTareasWhile'
+     * Imprime por pantalla todas las tareas
+     * pendientes, una en cada línea, precedidas de su posicion (empezando en 1), un
+     * punto y un espacio (por ejemplo: "1. Hacer la cama"). Si no hay tareas
+     * imprime una línea en blanco. El método no devuelve nada.
+     */
+    public void imprimirListadoTareasWhile() {
+        String listadoTareas = getListadoTareasWhile();
+        boolean impreso = false;
+        while (impreso == false) {
+            System.out.println(listadoTareas.split(", "));
+        }
+    }
+    
+    /**
+     * Metodo 'getPrimeraTareaConElTextoWhile'
+     * Devuelve un String conteniendo la primera
+     * tarea que contenga el texto indicado como parametro. En caso de que no haya
+     * ninguna coincidencia devuelve la cadena vacía. Hay que hacerlo con un bucle
+     * while. La coincidencia tiene que ser case-sensitive. El metodo debe
+     * ser lo mas eficiente posible (si hay un bucle no debe dar vueltas innecesarias)
+     */
+    public String getPrimeraTareaConElTextoWhile(String textoIndicado) {
+        boolean encontrado = false;
+        String tareaPrimera = "";
+        int contador = 0;
+        while (!encontrado && (contador < tareasPendientes.size())) {
+            tareaPrimera = tareasPendientes.get(contador);
+            if (tareaPrimera.contains(textoIndicado)) {
+                encontrado = true;
+            }
+            contador++;
+        }
+        if (!encontrado) {
+            tareaPrimera = "";
+        }
+        return tareaPrimera;
+    }
+    
+    /**
+     * Metodo 'imprimePrimeraTareaConTextoWhile'
+     * Imprime por pantalla la primera tarea
+     * que contenga el texto indicado como parametro. En caso de que no haya ninguna
+     * coincidencia imprime una línea en blanco. La coincidencia tiene que ser
+     * case-sensitive.
+     */
+    public void imprimePrimeraTareaConTextoWhile(String textoIndicado) {
+        System.out.println(getPrimeraTareaConElTextoWhile(textoIndicado));
+    }
 }
