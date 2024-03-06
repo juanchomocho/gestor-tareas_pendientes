@@ -312,4 +312,147 @@ public class GestorTareas {
     public void imprimePrimeraTareaConTextoWhile(String textoIndicado) {
         System.out.println(getPrimeraTareaConElTextoWhile(textoIndicado));
     }
+    
+    /**
+     * Metodo 'getPrimerasTareas'
+     * Devuelve un String conteniendo las primeras n tareas
+     * (siendo n el parametro del metodo), una en cada linea con su número delante.
+     * En caso de que no haya suficientes se devuelven solo las que haya. En caso de
+     * no haber tareas se devuelve la cadena vacía.
+     */
+    public String getPrimerasTareas(int numeroLineas) {
+        int contador = 0;
+        String tareasUnaLinea = "";
+        boolean finTarea = false;
+        if (tareasPendientes.size() != 0 && numeroLineas != 0) {
+            while (contador <= numeroLineas && finTarea == false) {
+                if (finTarea == false) {
+                    if (contador == (tareasPendientes.size()-1)) {
+                        finTarea = true;
+                    }
+                    if (numeroLineas != contador) {
+                        tareasUnaLinea = tareasUnaLinea + (contador +1)  + ". "  + tareasPendientes.get(contador) + "\n" ;
+                    }
+                    contador++;
+                }
+            }
+        }
+        else {
+            tareasUnaLinea = "";
+        }
+
+        return tareasUnaLinea;
+    }
+    
+    /**
+     * Metodo 'imprimePrimerasTareas'
+     * Imprime por pantalla las primeras n tareas (siendo
+     * n el parametro del metodo), una en cada linea con su número delante. En caso
+     * de que no haya suficientes se imprimen solo las que haya. En caso de no haber
+     * tareas se imprime una linea en blanco. El metodo no devuelve nada y debe usar
+     * el método anterior
+     */
+    public void imprimePrimerasTareas(int numeroLineas) {
+        System.out.println(getPrimerasTareas(numeroLineas));
+    }
+    
+    /**
+     * Metodo 'hayTareaConElTextoEficiente'
+     * Devuelve true si hay al menos una tarea que
+     * contenga el texto indicado como parámetro y false en caso contrario. El
+     * metodo se debe ejecutar de la forma mas rapida posible
+     */
+    public boolean hayTareaConElTextoEficiente(String textoIndicado) {
+        boolean encontrado = false;
+        int posicion = 0;
+        String tarea = "";
+        while (posicion < tareasPendientes.size() && encontrado == false) {
+            tarea = tareasPendientes.get(posicion);
+            if (tarea.contains(textoIndicado)) {
+                encontrado = true;
+            }
+            posicion++;
+        }
+        return encontrado;
+    }
+    
+    /**
+     * Metodo 'getTareasConElTexto'
+     * Devuelve un String conteniendo todas las tareas que
+     * contienen el texto indicado como parametro, una en cada linea (sin número
+     * asociado). El String devuelto contiene una ultima linea adicional que indica
+     * el numero de tareas encontradas o el texto "No se encontraron coincidencias".
+     * La coincidencia tiene que ser case-sensitive.
+     */
+    public String getTareasConElTexto(String textoIndicado) {
+        int numeroDeTareas = 0;
+        String tareas = "";
+        for (String tarea : tareasPendientes) {
+            if (tarea.contains(textoIndicado)) {
+                numeroDeTareas++;
+                tareas = tareas + tarea + "\n";
+            }
+        }
+        if (numeroDeTareas == 0) {
+            tareas = "No se encontraron coincidencias"; 
+        } else {
+            tareas = tareas + numeroDeTareas;
+        }
+        return tareas;
+    }
+    
+    /**
+     * Metodo 'imprimirTareasConElTexto'
+     * Muestra por pantalla todas las tareas que
+     * contienen el texto indicado como parametro, una en cada linea. Se imprime una
+     * ultima linea adicional que indica el numero de tareas encontradas o el texto
+     * "No se encontraron coincidencias" si no hay ninguna que contenga el texto. La
+     * coincidencia tiene que ser case-sensitive.
+     */
+    public void imprimirTareasConElTexto(String textoIndicado) {
+        System.out.println(getTareasConElTexto(textoIndicado));
+    }
+    
+    /**
+     * Metodo 'eliminaPrimeraTareaConElTexto'
+     * Elimina la primera tarea que contiene el
+     * texto indicado por parámetro. Devuelve true si se eliminó una tarea o false
+     * en caso contrario. Hay que hacerlo lo mas eficiente posible
+     */
+    public boolean eliminaPrimeraTareaConElTexto(String parametro) {
+        boolean borrado = false;
+        int contador = 0;
+        while (tareasPendientes.size() > contador && borrado == false) {
+            String tareaBorrar = "";
+            tareaBorrar = tareasPendientes.get(contador);
+            if (tareaBorrar.contains(parametro)) {
+                borrado = true;
+                tareasPendientes.remove(contador);
+            }
+            contador++;
+        }
+        return borrado;
+    }
+    
+    /**
+     * Metodo 'eliminaTodasLasTareasConElTexto'
+     * Elimina todas las tareas que contienen un
+     * texto pasado como parametro. Devuelve el numero de tareas eliminadas. Hay que
+     * hacerlo con un bucle while.
+     */
+    public int eliminaTodasLasTareasConElTexto(String parametro) {
+        int contador = 0;
+        int cantidad = 0; 
+        while (tareasPendientes.size() > contador) {
+            String tareaBorrar = "";
+            tareaBorrar = tareasPendientes.get(contador);
+            if (tareaBorrar.contains(parametro)) {
+                tareasPendientes.remove(contador);
+                cantidad++;
+                contador--;
+            }
+            contador++;
+        }
+        return cantidad;
+    }
 }
