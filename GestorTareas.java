@@ -455,4 +455,59 @@ public class GestorTareas {
         }
         return cantidad;
     }
+    
+    /**
+     * Metodo 'editarTarea'
+     * Modifica el texto de la tarea indicada cuyo numero al
+     * listarla coincide con el pasado como primer parametro dejando el texto
+     * indicado en el segundo parámetro. Si la operación tiene exito devuelve
+     * true; false en caso contrario.
+     */
+    public boolean editarTarea(int numeroTarea, String textoIndicado) {
+        boolean exito = false;
+        if (numeroTarea <= tareasPendientes.size() && numeroTarea > 0) {
+            tareasPendientes.set((numeroTarea -1), textoIndicado);
+            exito = true;
+        }
+        return exito;
+    }
+    
+    /**
+     * Metodo 'marcarComoCompletada'
+     * Marca como completada la tarea cuyo numero al
+     * listarla coincide con el pasado como parametro y devuelve true si pudo
+     * realizar la operacion o false en caso contrario (se entiende que una tarea
+     * que ya esta completada no se puede volver a marcar como completada)
+     * No se pueden agregar nuevas clases al proyecto. Tampoco se puede cambiar
+     * el texto de una tarea (el resto de método anteriores deben seguir
+     * funcionando tal y como estan ahora mismo)
+     */
+    public boolean marcarComoCompletada(int parametro) {
+        boolean exito = false;
+        
+        if (parametro <= tareasPendientes.size() && parametro > 0) {
+            String tareaMarcar = tareasPendientes.get(parametro - 1);
+            if (!(tareaMarcar.contains("[x] "))) {
+                String tarea = "[x] " + tareasPendientes.get(parametro - 1);
+                tareasPendientes.set((parametro - 1), tarea);
+                exito = true;
+            }
+        }
+        return exito;
+    }
+    
+    /**
+     * Metodo 'getListaTareasCompletadasYNoCompletadas'
+     * Devuelve un String  con todas las
+     * tareas una en cada línea, precedidas de su posicion (empezando en 1), un
+     * punto un espacio y, si estan completadas, un corchete, una x y otro corchete,
+     * y luego el texto de la tarea. Ejemplo de tarea terminada sería
+     * "1. [x] Hacer la cama". Ejemplo de tarea no terminada sería "1. Hacer la cama".
+     * Si no hay tareas devuelve la cadena vacía. Se asume que las tareas cuando
+     * se insertan en el gestor no están completadas. No se pueden agregar nuevas
+     * clases al proyecto.
+     */
+    public String getListaTareasCompletadasYNoCompletadas() {
+        return getListadoTareas();
+    }
 }
