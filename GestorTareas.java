@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class GestorTareas {
     private ArrayList<String> tareasPendientes;
+    private HashMap tareasCompletadas;
     
     public GestorTareas() {
         tareasPendientes = new ArrayList<String>();
+        tareasCompletadas = new HashMap<Integer, String>();
     }
     
     /**
@@ -484,16 +488,12 @@ public class GestorTareas {
      */
     public boolean marcarComoCompletada(int parametro) {
         boolean exito = false;
-        
-        if (parametro <= tareasPendientes.size() && parametro > 0) {
-            String tareaMarcar = tareasPendientes.get(parametro - 1);
-            if (!(tareaMarcar.contains("[x] "))) {
-                String tarea = "[x] " + tareasPendientes.get(parametro - 1);
-                tareasPendientes.set((parametro - 1), tarea);
-                exito = true;
-            }
+        if (parametro <= tareasPendientes.size() && tareasCompletadas.get(parametro - 1) == null) {
+            String tarea = tareasPendientes.get(parametro - 1);
+            exito = true;
+            tareasCompletadas.put(parametro -1, tarea);
         }
-        return exito;
+         return exito;
     }
     
     /**
@@ -508,6 +508,20 @@ public class GestorTareas {
      * clases al proyecto.
      */
     public String getListaTareasCompletadasYNoCompletadas() {
-        return getListadoTareas();
+        int contador = 0;
+        String tareasUnaLinea = "";
+        
+        while (contador < tareasPendientes.size()) {
+            String tareaActual = tareasPendientes.get(contador);
+            if (tareasCompletadas.get(contador) != null) {
+                tareasUnaLinea = tareasUnaLinea + (contador + 1) + ". [x] " + tareaActual + "\n";
+            }
+            else {
+                tareasUnaLinea = tareasUnaLinea + (contador + 1) + ". " + tareaActual + "\n";
+            }
+            contador++;
+        }
+
+        return tareasUnaLinea;
     }
 }
